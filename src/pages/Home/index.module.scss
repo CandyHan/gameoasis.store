@@ -1,0 +1,32 @@
+.homePage {
+    min-height: 100vh;
+    overflow: auto;
+    padding: 0 20px 20px 20px;
+
+    .title {
+        margin-bottom: 20px;
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+        }
+    }
+
+    .gameList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        width: 100%;
+        max-width: 1200px;
+        justify-content: center;
+        
+        // 确保每行最少3个卡片
+        @media (min-width: 900px) {
+            justify-content: space-between;
+        }
+        
+        @media (min-width: 1200px) {
+            justify-content: flex-start;
+        }
+    }
+}
