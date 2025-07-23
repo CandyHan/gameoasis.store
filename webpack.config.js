@@ -8,7 +8,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         clean: true,
-        publicPath: '',
+        publicPath: '/', // 修改为根路径，避免相对路由问题
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
@@ -17,6 +17,7 @@ module.exports = {
             '@public': path.resolve(__dirname, 'public'),
         },
     },
+    devtool: 'source-map',
     module: {
         rules: [
         {
