@@ -1,9 +1,7 @@
 import React from 'react';
 import GameCard from '@/components/GameCard';
-import { GAME_INFO_MAP, GAME_NAME } from '@/constant';
+import { GAME_INFO_MAP, GAME_NAME, GAME_LIST } from '@/constant';
 import styles from './index.module.scss';
-
-const GAME_LIST = [GAME_NAME.MARIO_MASTER, GAME_NAME.MONSTER_SURVIVORS];
 
 const HomePage = () => {
     return (
