@@ -1,5 +1,5 @@
 .homePage {
-    min-height: 100vh;
+    height: 100%;
     overflow: auto;
     padding: 0 20px 20px 20px;
 
@@ -13,20 +13,10 @@
     }
 
     .gameList {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 24px;
         width: 100%;
         max-width: 1200px;
-        justify-content: center;
-        
-        // 确保每行最少3个卡片
-        @media (min-width: 900px) {
-            justify-content: space-between;
-        }
-        
-        @media (min-width: 1200px) {
-            justify-content: flex-start;
-        }
     }
 }
