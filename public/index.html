@@ -3,24 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameOasis Store</title>
+    <title>GameOasis Store - 免费在线游戏平台</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="GameOasis Store 提供免费在线游戏，包括Super Mario Bro、Monster Survivors、Rumblets Go、Hexa Sort、PolyTrack等热门游戏。无需下载，即开即玩！">
+    <meta name="keywords" content="免费游戏,在线游戏,Super Mario,Monster Survivors,Rumblets Go,Hexa Sort,PolyTrack,浏览器游戏">
+    <meta name="author" content="GameOasis Store">
+    <link rel="canonical" href="https://gameoasis.store/">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="GameOasis Store - 免费在线游戏平台">
+    <meta property="og:description" content="提供免费在线游戏，包括Super Mario Bro、Monster Survivors等热门游戏">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gameoasis.store/">
+    <meta property="og:image" content="https://gameoasis.store/assets/mario.png">
+    <meta property="og:site_name" content="GameOasis Store">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GameOasis Store - 免费在线游戏平台">
+    <meta name="twitter:description" content="提供免费在线游戏，包括Super Mario Bro、Monster Survivors等热门游戏">
+    <meta name="twitter:image" content="https://gameoasis.store/assets/mario.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/mario.png">
+    
+    <!-- Styles -->
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
                 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
                 sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
         }
         
-        #root {
-            min-height: 100vh;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .games-section {
+            padding: 3rem 0;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .game-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .game-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .game-content {
+            padding: 1.5rem;
+        }
+        
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+        
+        .game-description {
+            color: #718096;
+            line-height: 1.5;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: opacity 0.3s ease;
+        }
+        
+        .play-button:hover {
+            opacity: 0.9;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
         }
     </style>
+    
+    <!-- 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "GameOasis Store",
+        "url": "https://gameoasis.store/",
+        "description": "免费在线游戏平台，提供Super Mario Bro、Monster Survivors等热门游戏",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://gameoasis.store/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
 </head>
 <body>
-    <div id="root"></div>
+    <header>
+        <div class="container">
+            <h1>GameOasis Store</h1>
+            <p>免费在线游戏平台 - 无需下载，即开即玩！</p>
+            <div style="margin-top: 1rem;">
+                <a href="/home" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 5px; font-weight: 600;">进入完整版界面</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="games-section">
+            <div class="container">
+                <h2 class="section-title">热门游戏</h2>
+                <p class="section-subtitle">精选优质游戏，带您体验无限乐趣</p>
+                
+                <div class="games-grid">
+                    <!-- Super Mario Bro -->
+                    <article class="game-card" itemscope itemtype="https://schema.org/Game">
+                        <img src="/assets/mario.png" alt="Super Mario Bro游戏截图" class="game-image" itemprop="image">
+                        <div class="game-content">
+                            <h3 class="game-title" itemprop="name">Super Mario Bro</h3>
+                            <p class="game-description" itemprop="description">Challenge your mind with 32 levels. 经典的超级马里奥游戏，挑战你的反应能力和策略思维。</p>
+                            <a href="/game-detail/mario-master" class="play-button" itemprop="url">立即游戏</a>
+                        </div>
+                    </article>
+
+                    <!-- Monster Survivors -->
+                    <article class="game-card" itemscope itemtype="https://schema.org/Game">
+                        <img src="/assets/monster.png" alt="Monster Survivors游戏截图" class="game-image" itemprop="image">
+                        <div class="game-content">
+                            <h3 class="game-title" itemprop="name">Monster Survivors</h3>
+                            <p class="game-description" itemprop="description">Survive the night, defeat the monsters, and become the ultimate survivor in this thrilling adventure game! 在夜晚生存，击败怪物，成为终极幸存者！</p>
+                            <a href="/game-detail/monster-survivors" class="play-button" itemprop="url">立即游戏</a>
+                        </div>
+                    </article>
+
+                    <!-- Rumblets Go -->
+                    <article class="game-card" itemscope itemtype="https://schema.org/Game">
+                        <img src="/assets/rumblets.avif" alt="Rumblets Go游戏截图" class="game-image" itemprop="image">
+                        <div class="game-content">
+                            <h3 class="game-title" itemprop="name">Rumblets Go</h3>
+                            <p class="game-description" itemprop="description">Rumblets Go is a fun and challenging game that will test your reflexes and strategic thinking. 一个有趣且具有挑战性的游戏，测试你的反应能力和战略思维。</p>
+                            <a href="/game-detail/rumblets-go" class="play-button" itemprop="url">立即游戏</a>
+                        </div>
+                    </article>
+
+                    <!-- Hexa Sort -->
+                    <article class="game-card" itemscope itemtype="https://schema.org/Game">
+                        <img src="/assets/hexa-sort.avif" alt="Hexa Sort游戏截图" class="game-image" itemprop="image">
+                        <div class="game-content">
+                            <h3 class="game-title" itemprop="name">Hexa Sort</h3>
+                            <p class="game-description" itemprop="description">Hexa Sort is an addictive puzzle-sorting game that combines strategic matching and merging challenges. 一个令人上瘾的益智排序游戏，结合了策略匹配和合并挑战。</p>
+                            <a href="/game-detail/hexa-sort" class="play-button" itemprop="url">立即游戏</a>
+                        </div>
+                    </article>
+
+                    <!-- PolyTrack -->
+                    <article class="game-card" itemscope itemtype="https://schema.org/Game">
+                        <img src="/assets/polytrack.avif" alt="PolyTrack游戏截图" class="game-image" itemprop="image">
+                        <div class="game-content">
+                            <h3 class="game-title" itemprop="name">PolyTrack</h3>
+                            <p class="game-description" itemprop="description">Polytrack is a classic car racing game with a slight twist. 经典的汽车赛车游戏，带有独特的转折。</p>
+                            <a href="/game-detail/polytrack" class="play-button" itemprop="url">立即游戏</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 GameOasis Store. 保留所有权利。</p>
+            <p>免费在线游戏平台 - 让游戏更简单，让快乐更纯粹</p>
+        </div>
+    </footer>
+
+    <!-- 直接加载React应用 -->
+    <script>
+        // 直接加载React应用，替换整个页面内容
+        const script = document.createElement('script');
+        script.src = '/app.bundle.js';
+        script.defer = true;
+        document.head.appendChild(script);
+        
+        // 替换body内容为React应用的挂载点
+        document.body.innerHTML = '<div id="root"></div>';
+    </script>
 </body>
 </html> 

@@ -3,12 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.tsx',
+    entry: {
+        // React应用入口 - 用于游戏详情页
+        app: './src/index.tsx',
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
-        clean: true,
-        publicPath: '/', // 修改为根路径，避免相对路由问题
+        filename: '[name].bundle.js',
+        clean: false, // 不清理，保留静态文件
+        publicPath: '/',
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
@@ -41,7 +44,13 @@ module.exports = {
                 },
                 },
             },
-            'sass-loader',
+            {
+                loader: 'sass-loader',
+                options: {
+                    api: 'modern',
+                    implementation: require('sass'),
+                },
+            },
             ],
         },
         {
@@ -61,15 +70,26 @@ module.exports = {
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({
-        template: './public/index.html',
-        }),
         new CopyWebpackPlugin({
             patterns: [
                 {
                     from: 'public/assets',
                     to: 'assets',
                     noErrorOnMissing: true,
+                },
+                // 复制静态主页
+                {
+                    from: 'public/index.html',
+                    to: 'index.html',
+                },
+                // 复制SEO文件
+                {
+                    from: 'public/sitemap.xml',
+                    to: 'sitemap.xml',
+                },
+                {
+                    from: 'public/robots.txt',
+                    to: 'robots.txt',
                 },
             ],
         }),
@@ -79,7 +99,7 @@ module.exports = {
         directory: path.join(__dirname, 'public'),
         },
         compress: true,
-        port: 3000,
+        port: 3001,
         hot: true,
         historyApiFallback: true,
         open: true,

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://gameoasis.store/sitemap.xml
+
+# 禁止爬取构建文件
+Disallow: /app.bundle.js
+Disallow: /app.bundle.js.map
+
+# 允许爬取游戏详情页
+Allow: /game-detail/

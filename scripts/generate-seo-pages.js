@@ -1,28 +1,95 @@
-<!DOCTYPE html>
+const fs = require('fs');
+const path = require('path');
+
+// 页面SEO数据
+const pageData = {
+  home: {
+    title: 'GameOasis Store - 免费在线游戏平台',
+    description: 'GameOasis Store 提供免费在线游戏，包括Super Mario Bro、Monster Survivors、Rumblets Go、Hexa Sort、PolyTrack等热门游戏。无需下载，即开即玩！',
+    keywords: '免费游戏,在线游戏,Super Mario,Monster Survivors,Rumblets Go,Hexa Sort,PolyTrack,浏览器游戏',
+    url: 'https://gameoasis.store/home'
+  },
+  recent: {
+    title: '最近游戏 - GameOasis Store',
+    description: '查看您最近玩过的游戏，快速回到您喜欢的游戏世界。',
+    keywords: '最近游戏,游戏历史,GameOasis',
+    url: 'https://gameoasis.store/recent'
+  },
+  new: {
+    title: '新游戏 - GameOasis Store',
+    description: '发现最新的免费在线游戏，体验最新的游戏乐趣。',
+    keywords: '新游戏,最新游戏,免费游戏,GameOasis',
+    url: 'https://gameoasis.store/new'
+  },
+  trending: {
+    title: '热门游戏 - GameOasis Store',
+    description: '查看当前最受欢迎的游戏，加入全球玩家的游戏热潮。',
+    keywords: '热门游戏,流行游戏,最受欢迎游戏,GameOasis',
+    url: 'https://gameoasis.store/trending'
+  }
+};
+
+// 游戏数据
+const games = [
+  {
+    name: 'Super Mario Bro',
+    description: 'Challenge your mind with 32 levels. 经典的超级马里奥游戏，挑战你的反应能力和策略思维。',
+    image: '/assets/mario.png',
+    url: '/game-detail/mario-master'
+  },
+  {
+    name: 'Monster Survivors',
+    description: 'Survive the night, defeat the monsters, and become the ultimate survivor in this thrilling adventure game! 在夜晚生存，击败怪物，成为终极幸存者！',
+    image: '/assets/monster.png',
+    url: '/game-detail/monster-survivors'
+  },
+  {
+    name: 'Rumblets Go',
+    description: 'Rumblets Go is a fun and challenging game that will test your reflexes and strategic thinking. 一个有趣且具有挑战性的游戏，测试你的反应能力和战略思维。',
+    image: '/assets/rumblets.avif',
+    url: '/game-detail/rumblets-go'
+  },
+  {
+    name: 'Hexa Sort',
+    description: 'Hexa Sort is an addictive puzzle-sorting game that combines strategic matching and merging challenges. 一个令人上瘾的益智排序游戏，结合了策略匹配和合并挑战。',
+    image: '/assets/hexa-sort.avif',
+    url: '/game-detail/hexa-sort'
+  },
+  {
+    name: 'PolyTrack',
+    description: 'Polytrack is a classic car racing game with a slight twist. 经典的汽车赛车游戏，带有独特的转折。',
+    image: '/assets/polytrack.avif',
+    url: '/game-detail/polytrack'
+  }
+];
+
+// 生成HTML模板
+function generateHTML(pageKey, data) {
+  return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameOasis Store - 免费在线游戏平台</title>
+    <title>${data.title}</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="GameOasis Store 提供免费在线游戏，包括Super Mario Bro、Monster Survivors、Rumblets Go、Hexa Sort、PolyTrack等热门游戏。无需下载，即开即玩！">
-    <meta name="keywords" content="免费游戏,在线游戏,Super Mario,Monster Survivors,Rumblets Go,Hexa Sort,PolyTrack,浏览器游戏">
+    <meta name="description" content="${data.description}">
+    <meta name="keywords" content="${data.keywords}">
     <meta name="author" content="GameOasis Store">
-    <link rel="canonical" href="https://gameoasis.store/">
+    <link rel="canonical" href="${data.url}">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="GameOasis Store - 免费在线游戏平台">
-    <meta property="og:description" content="提供免费在线游戏，包括Super Mario Bro、Monster Survivors等热门游戏">
+    <meta property="og:title" content="${data.title}">
+    <meta property="og:description" content="${data.description}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://gameoasis.store/">
+    <meta property="og:url" content="${data.url}">
     <meta property="og:image" content="https://gameoasis.store/assets/mario.png">
     <meta property="og:site_name" content="GameOasis Store">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="GameOasis Store - 免费在线游戏平台">
-    <meta name="twitter:description" content="提供免费在线游戏，包括Super Mario Bro、Monster Survivors等热门游戏">
+    <meta name="twitter:title" content="${data.title}">
+    <meta name="twitter:description" content="${data.description}">
     <meta name="twitter:image" content="https://gameoasis.store/assets/mario.png">
     
     <!-- Favicon -->
@@ -179,8 +246,8 @@
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "GameOasis Store",
-        "url": "https://gameoasis.store/",
-        "description": "免费在线游戏平台，提供Super Mario Bro、Monster Survivors等热门游戏",
+        "url": "${data.url}",
+        "description": "${data.description}",
         "potentialAction": {
             "@type": "SearchAction",
             "target": "https://gameoasis.store/?q={search_term_string}",
@@ -194,9 +261,6 @@
         <div class="container">
             <h1>GameOasis Store</h1>
             <p>免费在线游戏平台 - 无需下载，即开即玩！</p>
-            <div style="margin-top: 1rem;">
-                <a href="/home" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 5px; font-weight: 600;">进入完整版界面</a>
-            </div>
         </div>
     </header>
 
@@ -207,55 +271,16 @@
                 <p class="section-subtitle">精选优质游戏，带您体验无限乐趣</p>
                 
                 <div class="games-grid">
-                    <!-- Super Mario Bro -->
+                    ${games.map(game => `
                     <article class="game-card" itemscope itemtype="https://schema.org/Game">
-                        <img src="/assets/mario.png" alt="Super Mario Bro游戏截图" class="game-image" itemprop="image">
+                        <img src="${game.image}" alt="${game.name}游戏截图" class="game-image" itemprop="image">
                         <div class="game-content">
-                            <h3 class="game-title" itemprop="name">Super Mario Bro</h3>
-                            <p class="game-description" itemprop="description">Challenge your mind with 32 levels. 经典的超级马里奥游戏，挑战你的反应能力和策略思维。</p>
-                            <a href="/game-detail/mario-master" class="play-button" itemprop="url">立即游戏</a>
+                            <h3 class="game-title" itemprop="name">${game.name}</h3>
+                            <p class="game-description" itemprop="description">${game.description}</p>
+                            <a href="${game.url}" class="play-button" itemprop="url">立即游戏</a>
                         </div>
                     </article>
-
-                    <!-- Monster Survivors -->
-                    <article class="game-card" itemscope itemtype="https://schema.org/Game">
-                        <img src="/assets/monster.png" alt="Monster Survivors游戏截图" class="game-image" itemprop="image">
-                        <div class="game-content">
-                            <h3 class="game-title" itemprop="name">Monster Survivors</h3>
-                            <p class="game-description" itemprop="description">Survive the night, defeat the monsters, and become the ultimate survivor in this thrilling adventure game! 在夜晚生存，击败怪物，成为终极幸存者！</p>
-                            <a href="/game-detail/monster-survivors" class="play-button" itemprop="url">立即游戏</a>
-                        </div>
-                    </article>
-
-                    <!-- Rumblets Go -->
-                    <article class="game-card" itemscope itemtype="https://schema.org/Game">
-                        <img src="/assets/rumblets.avif" alt="Rumblets Go游戏截图" class="game-image" itemprop="image">
-                        <div class="game-content">
-                            <h3 class="game-title" itemprop="name">Rumblets Go</h3>
-                            <p class="game-description" itemprop="description">Rumblets Go is a fun and challenging game that will test your reflexes and strategic thinking. 一个有趣且具有挑战性的游戏，测试你的反应能力和战略思维。</p>
-                            <a href="/game-detail/rumblets-go" class="play-button" itemprop="url">立即游戏</a>
-                        </div>
-                    </article>
-
-                    <!-- Hexa Sort -->
-                    <article class="game-card" itemscope itemtype="https://schema.org/Game">
-                        <img src="/assets/hexa-sort.avif" alt="Hexa Sort游戏截图" class="game-image" itemprop="image">
-                        <div class="game-content">
-                            <h3 class="game-title" itemprop="name">Hexa Sort</h3>
-                            <p class="game-description" itemprop="description">Hexa Sort is an addictive puzzle-sorting game that combines strategic matching and merging challenges. 一个令人上瘾的益智排序游戏，结合了策略匹配和合并挑战。</p>
-                            <a href="/game-detail/hexa-sort" class="play-button" itemprop="url">立即游戏</a>
-                        </div>
-                    </article>
-
-                    <!-- PolyTrack -->
-                    <article class="game-card" itemscope itemtype="https://schema.org/Game">
-                        <img src="/assets/polytrack.avif" alt="PolyTrack游戏截图" class="game-image" itemprop="image">
-                        <div class="game-content">
-                            <h3 class="game-title" itemprop="name">PolyTrack</h3>
-                            <p class="game-description" itemprop="description">Polytrack is a classic car racing game with a slight twist. 经典的汽车赛车游戏，带有独特的转折。</p>
-                            <a href="/game-detail/polytrack" class="play-button" itemprop="url">立即游戏</a>
-                        </div>
-                    </article>
+                    `).join('')}
                 </div>
             </div>
         </section>
@@ -268,16 +293,61 @@
         </div>
     </footer>
 
-    <!-- 直接加载React应用 -->
+    <!-- 加载React应用的脚本 -->
     <script>
-        // 直接加载React应用，替换整个页面内容
-        const script = document.createElement('script');
-        script.src = '/app.bundle.js';
-        script.defer = true;
-        document.head.appendChild(script);
+        // 检测是否需要加载React应用
+        const currentPath = window.location.pathname;
+        const reactPaths = ['/home', '/recent', '/new', '/trending', '/updated', '/originals', '/multi'];
+        const isGameDetail = currentPath.startsWith('/game-detail/');
+        const isReactPath = reactPaths.includes(currentPath);
         
-        // 替换body内容为React应用的挂载点
-        document.body.innerHTML = '<div id="root"></div>';
+        if (isReactPath || isGameDetail) {
+            // 动态加载React应用
+            const script = document.createElement('script');
+            script.src = '/app.bundle.js';
+            script.defer = true;
+            document.head.appendChild(script);
+            
+            // 替换body内容为React应用的挂载点
+            document.body.innerHTML = '<div id="root"></div>';
+        }
     </script>
 </body>
-</html> 
+</html>`;
+}
+
+// 生成SEO页面
+function generateSEOPages() {
+  console.log('开始生成SEO页面...');
+  
+  const distDir = path.join(__dirname, '../dist');
+  
+  // 确保dist目录存在
+  if (!fs.existsSync(distDir)) {
+    fs.mkdirSync(distDir, { recursive: true });
+  }
+  
+  // 生成每个页面的HTML
+  Object.entries(pageData).forEach(([pageKey, data]) => {
+    const html = generateHTML(pageKey, data);
+    const outputPath = path.join(distDir, `${pageKey}.html`);
+    
+    fs.writeFileSync(outputPath, html);
+    console.log(`✅ 已生成: ${pageKey}.html`);
+  });
+  
+  // 生成主页
+  const homeHTML = generateHTML('home', pageData.home);
+  const indexPath = path.join(distDir, 'index.html');
+  fs.writeFileSync(indexPath, homeHTML);
+  console.log('✅ 已生成: index.html');
+  
+  console.log('SEO页面生成完成！');
+}
+
+// 运行生成脚本
+if (require.main === module) {
+  generateSEOPages();
+}
+
+module.exports = generateSEOPages;
